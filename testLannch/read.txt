@@ -1,0 +1,20 @@
+第一种方法
+自动截图，并自动识别验证，进入Lannch自动测试
+1.下载python库
+pip install PIL
+2.必须将此项目放在D盘（由于运行baiduApi.py脚本是路径是固定，在testLannch.py可修改）
+D:\20181212XH
+monkeyrunner D:\20181212XH\testLannch\testLannch.py
+运行失败时，可能由于百度识图api返回识别失败的结果导致的。
+成功运行时只打印显示
+sreenshots success
+ocrImg success
+
+或是
+
+
+第二种方法
+跳过验证，直接通过activity进入Lannch
+monkeyrunner D:\20181212XH\testLannch\enterQuickly.py
+
+
