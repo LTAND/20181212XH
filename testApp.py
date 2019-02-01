@@ -119,14 +119,51 @@ def testVolume():
   return
 # ================音量测试 end================
 
+# ================按键测试 end================
+def testKeyCode():
+  # 按BACK键 
+  device.press('KEYCODE_BACK',MonkeyDevice.DOWN_AND_UP)  
+  MonkeyRunner.sleep(2)  
+  # 按上音量键 
+  device.press('KEYCODE_25',MonkeyDevice.DOWN_AND_UP)  
+  MonkeyRunner.sleep(2)  
+  # 按下音量键 
+  device.press('KEYCODE_24',MonkeyDevice.DOWN_AND_UP)   
+# ================按键测试 end================
+
 
 # ================行走测试 start==========
 def testWalk():
+  def stop():
+    # 停止
+    MonkeyRunner.sleep(1)
+    device.touch(624,334,"DOWN_AND_UP") 
+    MonkeyRunner.sleep(1)
+
   device.touch(624,173,"DOWN_AND_UP") # 前进
-  MonkeyRunner.sleep(3)
-  device.touch(624,482,"DOWN_AND_UP") # 停止
+  stop()
+  device.touch(624,482,"DOWN_AND_UP") # 后退
+  stop()
+  device.touch(421,334,"DOWN_AND_UP") # 左转
+  stop()
+  device.touch(885,334,"DOWN_AND_UP") # 右转
+  stop()
+  print('walk success') 
   return
 # ================行走测试 end============
+
+# ================灯光测试 start==========
+def testLamp():
+  device.touch(624,166,"DOWN_AND_UP") # 灯亮 
+  MonkeyRunner.sleep(3) 
+  device.touch(624,309,"DOWN_AND_UP") # 灯灭 
+  MonkeyRunner.sleep(3) 
+  device.touch(624,459,"DOWN_AND_UP") # 呼吸
+  MonkeyRunner.sleep(5) 
+  device.touch(624,166,"DOWN_AND_UP") # 最后灯亮 
+  print('lamp success') 
+  return 
+# ================灯光测试 end============
 
 test = {
 # testApp的一些Activity
@@ -154,18 +191,29 @@ def testApp():
   touchNext()
   testWifi()
 
+  # 此处跳过蓝牙测试
+
   startActivity(test['camera'])
-  testCamera()
+  testCamera() 
 
   touchNext()
   # testRecord() # 录音自动化测试有问题，会自动崩溃
   
   touchNext()
-  testVolume()
+  testVolume() # 音量
 
-  touchNext()  # 下一步为按键功能测试
+  touchNext()  
+  # testKeyCode() # 消息键，短按切换键不知按什么键名
+
+  touchNext()  
+  testWalk() # 行走
+
+  touchNext()  
+  testLamp()  # 灯
+
+  touchNext()  
   return 
 
 if __name__ == '__main__':
-  # 录音, 蓝牙，按键，行走，呼吸灯测试就不自动化测试
+  # 录音, 蓝牙，按键测试就不自动化测试
   testApp()
